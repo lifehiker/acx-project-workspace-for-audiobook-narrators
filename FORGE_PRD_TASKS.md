@@ -77,6 +77,7 @@
 
 ## Deployment
 - [x] Production-ready Dockerfile using standalone output and existing directories only.
+- [x] Docker runtime exports `NEXTAUTH_URL`/`NEXTAUTH_SECRET` defaults before starting the standalone server to avoid deployment-time NextAuth URL warnings.
 - [x] `.env.example` includes used variables, including production auth and optional Google OAuth.
 - [x] No `next/font/google` or build-time network resources.
 - [x] Third-party SDK clients are not initialized at module scope.
@@ -90,5 +91,6 @@
 - [x] Start generated standalone server and smoke-test public/auth routes.
 - [x] Review UI visually with Playwright desktop/mobile route rendering.
 - [x] Test interactive login/navigation and authenticated dashboard route.
+- [x] Smoke-test project overview, pronunciation, intake link generation, pickup, proofing, payments, and royalties routes in browser.
 - [ ] Build Docker image if Docker is available. Blocked: Docker CLI exists, but `/var/run/docker.sock` access is denied in this environment.
 - [x] Create `FORGE_COMPLETION_AUDIT.md`.

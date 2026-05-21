@@ -17,10 +17,10 @@ export function Button({
 }) {
   const styles = cn(
     "focus-ring inline-flex h-10 items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition",
-    variant === "primary" && "bg-[#1f5d52] text-white hover:bg-[#174940]",
-    variant === "secondary" && "border border-[#b8b0a1] bg-white text-[#17211b] hover:bg-[#eee8dc]",
-    variant === "ghost" && "text-[#285f55] hover:bg-[#e7efe9]",
-    variant === "danger" && "bg-[#8a2f2f] text-white hover:bg-[#6f2525]",
+    variant === "primary" && "bg-[#1f5d52] !text-white hover:bg-[#174940]",
+    variant === "secondary" && "border border-[#b8b0a1] bg-white !text-[#17211b] hover:bg-[#eee8dc]",
+    variant === "ghost" && "!text-[#285f55] hover:bg-[#e7efe9]",
+    variant === "danger" && "bg-[#8a2f2f] !text-white hover:bg-[#6f2525]",
     className,
   );
   if (href) return <Link className={styles} href={href}>{children}</Link>;

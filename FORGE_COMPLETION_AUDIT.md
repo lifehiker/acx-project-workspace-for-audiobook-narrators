@@ -41,7 +41,7 @@
 
 ## Deployment
 - Standalone output: `next.config.ts`.
-- Docker and runtime auth URL defaults: `Dockerfile`.
+- Docker standalone runtime, SQLite schema initialization, and NextAuth URL/secret defaults: `Dockerfile`.
 - Environment template: `.env.example`.
 
 ## External Credential Items
