@@ -9,6 +9,8 @@ export const metadata = {
 };
 
 export default function LoginPage() {
+  const googleEnabled = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+
   return (
     <main className="mx-auto grid min-h-screen w-full max-w-md place-items-center p-6">
       <div className="w-full">
@@ -17,7 +19,7 @@ export default function LoginPage() {
         </PageHeader>
         <Card>
           <Suspense fallback={<p className="text-sm text-[#596358]">Loading sign in form...</p>}>
-            <LoginForm />
+            <LoginForm googleEnabled={googleEnabled} />
           </Suspense>
           <p className="mt-4 text-sm text-[#596358]">No account yet? <Link className="font-semibold text-[#1f5d52]" href="/signup">Start a 14-day trial</Link>.</p>
         </Card>

@@ -5,7 +5,7 @@
 - **App Name:** acx-project-workspace-for-audiobook-narrators
 - **Repository:** acx-project-workspace-for-audiobook-narrators
 - **Tech Stack:** Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui
-- **Description:** A project workspace for freelance audiobook narrators and producer-narrators managing ACX work from production notes through payment tracking. It can centralize pronunciation sheets, author notes, pickups, proofing comments, per-finished-hour rates, royalty-share terms, payment status, and rights reversion dates.
+- **Description:** acx-project-workspace-for-audiobook-narrators
 
 ---
 

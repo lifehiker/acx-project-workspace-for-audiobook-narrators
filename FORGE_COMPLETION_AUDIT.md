@@ -8,7 +8,7 @@
 
 ## Auth
 - Credentials signup: `src/app/signup/page.tsx`, `src/actions/auth.ts`.
-- Credentials login: `src/app/login/page.tsx`, `src/components/login-form.tsx`, `src/app/api/auth/[...nextauth]/route.ts`, `src/lib/auth.ts`.
+- Credentials login and optional Google OAuth: `src/app/login/page.tsx`, `src/components/login-form.tsx`, `src/app/api/auth/[...nextauth]/route.ts`, `src/lib/auth.ts`.
 - Protected workspace routes: `src/app/(app)/layout.tsx`.
 
 ## Workspace Pages And Workflows
@@ -41,12 +41,13 @@
 
 ## Deployment
 - Standalone output: `next.config.ts`.
-- Docker: `Dockerfile`.
+- Docker and runtime auth URL defaults: `Dockerfile`.
 - Environment template: `.env.example`.
 
 ## External Credential Items
 - Stripe live checkout and portal require Stripe keys and price IDs.
 - Resend delivery requires a Resend API key and verified sender.
 - Cron protection requires `CRON_SECRET` when an external scheduler is configured.
+- Google OAuth requires `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and a configured callback URL.
 
 The app still builds and runs without those credentials because all third-party SDKs are lazily initialized and guarded.

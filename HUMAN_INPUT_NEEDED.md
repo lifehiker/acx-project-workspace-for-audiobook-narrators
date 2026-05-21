@@ -24,8 +24,11 @@ Verify the sending domain in Resend and set `EMAIL_FROM` to an approved sender.
 
 - `AUTH_SECRET`
 - `NEXTAUTH_URL`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
 
 Generate `AUTH_SECRET` with `openssl rand -base64 32` and set `NEXTAUTH_URL` to the production site URL.
+Create a Google OAuth web client if Google sign-in should be enabled. Add the deployed callback URL in Google Cloud as `/api/auth/callback/google`.
 
 ## Cron
 

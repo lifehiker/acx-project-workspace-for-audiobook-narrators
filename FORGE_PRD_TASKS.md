@@ -14,7 +14,8 @@
 - [x] Auto-create a workspace and 14-day trial subscription for first-time users.
 
 ## Auth
-- [x] Implement Credentials signup/login with bcryptjs and JWT sessions.
+- [x] Implement Credentials signup/login with bcryptjs and JWT sessions as the no-external-account fallback.
+- [x] Implement guarded Google OAuth via NextAuth when `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are configured.
 - [x] Add protected authenticated app layout.
 - [x] Keep marketing, pricing, SEO, intake, login, and signup routes public.
 - [x] Add safe missing-env behavior for auth secret in development/build.
@@ -76,7 +77,7 @@
 
 ## Deployment
 - [x] Production-ready Dockerfile using standalone output and existing directories only.
-- [x] `.env.example` includes used variables.
+- [x] `.env.example` includes used variables, including production auth and optional Google OAuth.
 - [x] No `next/font/google` or build-time network resources.
 - [x] Third-party SDK clients are not initialized at module scope.
 
@@ -86,6 +87,7 @@
 - [x] Run `npm run build` and fix all errors.
 - [x] Start dev server.
 - [x] Smoke-test primary public and app routes.
+- [x] Start generated standalone server and smoke-test public/auth routes.
 - [x] Review UI visually with Playwright desktop/mobile route rendering.
 - [x] Test interactive login/navigation and authenticated dashboard route.
 - [ ] Build Docker image if Docker is available. Blocked: Docker CLI exists, but `/var/run/docker.sock` access is denied in this environment.
