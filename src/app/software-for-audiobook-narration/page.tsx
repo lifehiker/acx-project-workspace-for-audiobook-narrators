@@ -1,0 +1,4 @@
+import { PublicShell } from "@/components/public-shell";
+import { Button, Card, PageHeader } from "@/components/ui";
+export const metadata = { title: "Software for Audiobook Narration | Project Workspace for Narrators", description: "Audiobook narration software for project administration, pronunciation sheets, pickups, payments, and royalty-share reminders." };
+export default function Page() { return <PublicShell><main className="mx-auto max-w-7xl px-4 py-12"><PageHeader title="Software for audiobook narration administration" eyebrow="Narrator workspace">Not an audio generator and not a marketplace: a practical workspace for the admin work around recording.</PageHeader><Card><p className="leading-7 text-[#596358]">Use ACX Workspace to centralize the production details that usually live in docs, sheets, inboxes, and timestamp notes.</p><Button className="mt-5" href="/signup">Start workspace trial</Button></Card></main></PublicShell>; }

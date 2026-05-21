@@ -1,0 +1,4 @@
+import { PublicShell } from "@/components/public-shell";
+import { Button, Card, PageHeader } from "@/components/ui";
+export const metadata = { title: "ACX Narrator Workspace | Project Portal for ACX Producers", description: "Run ACX projects outside scattered docs with pronunciation intake, pickups, proofing notes, and payment tracking." };
+export default function Page() { return <PublicShell><main className="mx-auto max-w-7xl px-4 py-12"><PageHeader title="ACX narrator workspace" eyebrow="Use case">Run ACX projects outside scattered docs, ACX messages, timestamp notes, and invoice spreadsheets.</PageHeader><Card><p className="leading-7 text-[#596358]">Track author details, pronunciations, proofing comments, pickups, PFH terms, invoices, and delivery status for each ACX title.</p><Button className="mt-5" href="/signup">Run your next ACX project</Button></Card></main></PublicShell>; }

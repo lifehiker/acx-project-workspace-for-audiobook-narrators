@@ -1,0 +1,284 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  SOLO
+  PRO
+  STUDIO
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
+enum MemberRole {
+  OWNER
+  COLLABORATOR
+  READ_ONLY
+}
+
+enum ProjectPlatform {
+  ACX
+  FINDAWAY
+  DIRECT
+  OTHER
+}
+
+enum ProjectType {
+  PFH
+  ROYALTY_SHARE
+  ROYALTY_SHARE_PLUS
+  FLAT_FEE
+  OTHER
+}
+
+enum ProjectStatus {
+  INTAKE
+  WAITING_ON_AUTHOR
+  RECORDING
+  PROOFING
+  PICKUPS
+  DELIVERED
+  PAID
+  ARCHIVED
+}
+
+enum PronunciationStatus {
+  PENDING
+  APPROVED
+  NEEDS_CLARIFICATION
+}
+
+enum PickupStatus {
+  OPEN
+  IN_PROGRESS
+  RECORDED
+  SENT_FOR_REVIEW
+  APPROVED
+}
+
+enum PaymentStatus {
+  NOT_INVOICED
+  INVOICED
+  OVERDUE
+  PAID
+}
+
+enum ProofingSeverity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String?
+  email         String       @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  accounts      Account[]
+  sessions      Session[]
+  memberships   Membership[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Workspace {
+  id            String         @id @default(cuid())
+  name          String
+  memberships   Membership[]
+  projects      Project[]
+  subscription  Subscription?
+  invites       ProjectInvite[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Membership {
+  id          String     @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        MemberRole @default(OWNER)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+
+  @@unique([userId, workspaceId])
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  workspaceId          String             @unique
+  plan                 Plan               @default(SOLO)
+  status               SubscriptionStatus @default(TRIALING)
+  trialEndsAt          DateTime?
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  workspace            Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+model Project {
+  id                     String                 @id @default(cuid())
+  workspaceId            String
+  title                  String
+  authorName             String
+  authorEmail            String?
+  platform               ProjectPlatform        @default(ACX)
+  projectType            ProjectType            @default(PFH)
+  status                 ProjectStatus          @default(INTAKE)
+  estimatedFinishedHours Float?
+  dueDate                DateTime?
+  notes                  String?
+  workspace              Workspace              @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  pronunciations         PronunciationEntry[]
+  pickups                PickupItem[]
+  proofingComments       ProofingComment[]
+  payment                PaymentRecord?
+  royalty                RoyaltyRecord?
+  invites                ProjectInvite[]
+  intakeLinks            AuthorIntakeLink[]
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+
+  @@index([workspaceId, status])
+}
+
+model PronunciationEntry {
+  id            String              @id @default(cuid())
+  projectId     String
+  term          String
+  pronunciation String
+  context       String?
+  audioUrl      String?
+  status        PronunciationStatus @default(PENDING)
+  submittedBy   String?
+  project       Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+}
+
+model PickupItem {
+  id           String       @id @default(cuid())
+  projectId    String
+  chapter      String
+  timestamp    String
+  issue        String
+  requestedFix String
+  source       String?
+  assignee     String?
+  status       PickupStatus @default(OPEN)
+  dueDate      DateTime?
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model ProofingComment {
+  id          String           @id @default(cuid())
+  projectId   String
+  chapter     String
+  timestamp   String
+  note        String
+  prooferName String?
+  severity    ProofingSeverity @default(MEDIUM)
+  convertedAt DateTime?
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model PaymentRecord {
+  id                     String        @id @default(cuid())
+  projectId              String        @unique
+  rateType               ProjectType   @default(PFH)
+  pfhRate                Float?
+  estimatedFinishedHours Float?
+  agreedAmount           Float?
+  invoiceSentDate        DateTime?
+  paymentDueDate         DateTime?
+  paymentReceivedDate    DateTime?
+  status                 PaymentStatus @default(NOT_INVOICED)
+  project                Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  updatedAt              DateTime      @updatedAt
+}
+
+model RoyaltyRecord {
+  id               String   @id @default(cuid())
+  projectId        String   @unique
+  royaltyShareType String?
+  startDate        DateTime?
+  reversionDate    DateTime?
+  reminderDate     DateTime?
+  notes            String?
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  updatedAt        DateTime @updatedAt
+}
+
+model ProjectInvite {
+  id          String     @id @default(cuid())
+  workspaceId String
+  projectId   String
+  email       String
+  role        MemberRole @default(COLLABORATOR)
+  token       String     @unique
+  acceptedAt  DateTime?
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+}
+
+model AuthorIntakeLink {
+  id        String   @id @default(cuid())
+  projectId String
+  token     String   @unique
+  active    Boolean  @default(true)
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

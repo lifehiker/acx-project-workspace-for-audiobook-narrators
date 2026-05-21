@@ -1,0 +1,4 @@
+import { PublicShell } from "@/components/public-shell";
+import { Button, Card, PageHeader } from "@/components/ui";
+export const metadata = { title: "Why Audiobook Narrators Need Project Workspaces, Not More Spreadsheets", description: "A founder note on narrator-owned audiobook project administration." };
+export default function Page() { return <PublicShell><main className="mx-auto max-w-4xl px-4 py-12"><PageHeader title="Why audiobook narrators need project workspaces, not more spreadsheets" eyebrow="Founder note" /><Card><p className="leading-7 text-[#596358]">Narrators already have recording tools. The missing layer is operational: author intake, pronunciation approvals, proofing comments, pickup status, invoices, royalty-share reminders, and title history in one place.</p><Button className="mt-5" href="/templates">Start with free templates</Button></Card></main></PublicShell>; }

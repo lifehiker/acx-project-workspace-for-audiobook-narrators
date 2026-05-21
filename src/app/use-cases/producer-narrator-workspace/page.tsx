@@ -1,0 +1,4 @@
+import { PublicShell } from "@/components/public-shell";
+import { Button, Card, PageHeader } from "@/components/ui";
+export const metadata = { title: "Producer-Narrator Workspace | Audiobook Team Project Management", description: "Coordinate authors, proofers, pickups, payments, and royalty-share reminders for audiobook production teams." };
+export default function Page() { return <PublicShell><main className="mx-auto max-w-7xl px-4 py-12"><PageHeader title="Producer-narrator workspace" eyebrow="Use case">Give every title a production workspace for authors, proofers, pickups, payment terms, and reversion reminders.</PageHeader><Card><p className="leading-7 text-[#596358]">Studio tier supports project-level permissions, shared author/proofer contacts, and a team dashboard for small audiobook production teams.</p><Button className="mt-5" href="/signup">Build a production workspace</Button></Card></main></PublicShell>; }
