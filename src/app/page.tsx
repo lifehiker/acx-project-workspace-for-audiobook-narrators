@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle2, Clock, FileText, Mic2, ReceiptText } from "lucide-react";
 import { PublicShell } from "@/components/public-shell";
 import { Badge, Button, Card } from "@/components/ui";
+export const dynamic = "force-static";
 
 export default function Home() {
   return (
