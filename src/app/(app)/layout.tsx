@@ -2,6 +2,8 @@ import { AppNav } from "@/components/app-nav";
 import { requireUser } from "@/lib/auth";
 import { ensureWorkspace } from "@/lib/workspace";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
   await ensureWorkspace(user.id);
