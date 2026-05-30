@@ -2,6 +2,8 @@ import { Button, Card, PageHeader } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { ensureWorkspace } from "@/lib/workspace";
 
+export const dynamic = "force-dynamic";
+
 export default async function BillingPage() {
   const user = await requireUser();
   const workspace = await ensureWorkspace(user.id);
