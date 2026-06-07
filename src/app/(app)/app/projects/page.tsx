@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Button, Card, PageHeader } from "@/components/ui";
 import { ProjectStatusBadge } from "@/components/status";
