@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "A narrator-owned project workspace for pronunciations, pickups, proofing, payments, and royalty-share reminders.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
