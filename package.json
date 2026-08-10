@@ -19,7 +19,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.2.1",
     "lucide-react": "^1.16.0",
-    "nanoid": "^5.1.11",
+    "nanoid": "^5.1.16",
     "next": "16.2.6",
     "next-auth": "^4.24.14",
     "prisma": "^7.0.0",
